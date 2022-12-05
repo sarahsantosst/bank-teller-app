@@ -1,0 +1,42 @@
+<% if user_signed_in? %>
+  <%= current_user.description %>
+  <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
+<% else %>
+  <%= link_to 'Entrar', new_user_session_path  %>
+<% end %>
+
+<% if defined?(@account) && @account.present? %>
+  <h2>Código da sua conta: <%= @account.code %> </h2>
+  <h2>Saldo da sua conta: <%= @account.balance %> </h2>
+
+  <div>
+    <h3>Depósito</h3>
+
+    <%= form_tag deposit_account_path(@account.id) do %>
+      <%= number_field_tag :amount, 0 %>
+      <%= submit_tag "Depositar" %>
+    <% end %>
+  </div>
+
+  <div>
+    <h3>Saque</h3>
+
+    <%= form_tag withdraw_account_path(@account.id) do %>
+      <%= number_field_tag :amount, 0 %>
+      <%= submit_tag "Sacar" %>
+    <% end %>
+  </div>
+
+  <div>
+    <h3>Transferência</h3>
+
+    <%= form_tag transfer_account_path(@account.id) do %>
+      <%= text_field_tag :transfer_account_code, 'Código da conta de destino' %>
+      <%= text_field_tag :amount, 0 %>
+      <%= submit_tag "Transferir" %>
+    <% end %>
+  </div>
+  
+<% else %>
+  <%= button_to 'Abra sua conta', create_account_path %>
+<% end %>

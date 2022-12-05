@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BankTellerApp</title>
+    <title>BankSystem</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application" %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <%= link_to root_path do  %>
+        <h1> BankSystem </h1>
+      <% end %>
+      <div>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
+    </header>
+
+    <%= yield %> 
   </body>
 </html>

@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  devise_for :users
+  root to: 'home#index'
+  post 'create_account', to: 'home#create_account'
+  
+  resources :accounts, only: [] do
+    post 'deposit', to: 'accounts#deposit', on: :member, as: 'deposit'
+    post 'withdraw', to: 'accounts#withdraw', on: :member, as: 'withdraw'
+    post 'transfer', to: 'accounts#transfer', on: :member, as: 'transfer'
+  end
 end
+
