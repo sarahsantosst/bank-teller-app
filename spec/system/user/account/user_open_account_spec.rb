@@ -11,8 +11,8 @@ describe 'Usuario abre uma conta' do
     
     #assert 
     account = Account.where(user: user).first
-    expect(page).to have_content("Código da sua conta: #{account.code}")
-    expect(page).to have_content('Saldo da sua conta: 0.0')
+    expect(page).to have_content("Conta:\n#{account.code}")
+    expect(page).to have_content("Saldo:\n0.0")
     expect(page).to have_content('Depósito')
     expect(page).to have_content('Saque')
     expect(page).to have_content('Transferência')

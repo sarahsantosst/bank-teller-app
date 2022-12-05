@@ -1,42 +1,74 @@
-<% if user_signed_in? %>
-  <%= current_user.description %>
-  <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to 'Entrar', new_user_session_path  %>
-<% end %>
+<nav class="navbar navbar-expand-lg bg-light p-2 d-flex justify-content-between">
+  <div>
+    <% if defined?(@account) && @account.present? %>
+      <div class="d-flex align-items-baseline" style="gap: .5rem;">
+        <h4>Conta:</h4> 
+        <span><%= @account.code %></span>
+      </div>
+      <div class="d-flex align-items-baseline" style="gap: .5rem;">
+        <h4>Saldo:</h4> 
+        <span><%= @account.balance %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= button_to 'Sair', destroy_user_session_path, method: :delete, class: "btn btn-dark" %>
+  </div>
+</nav>
 
 <% if defined?(@account) && @account.present? %>
-  <h2>Código da sua conta: <%= @account.code %> </h2>
-  <h2>Saldo da sua conta: <%= @account.balance %> </h2>
+  <div class="d-flex justify-content-around" style="padding: 0 1rem;">
+    <div class="card col" style="max-width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">Depósito</h5>
 
-  <div>
-    <h3>Depósito</h3>
+        <%= form_tag deposit_account_path(@account.id) do %>
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">Valor</span>
+            <%= number_field_tag :amount, 0, class: "form-control" %>
+          </div>
+          
+          <%= submit_tag "Depositar", class: "btn btn-dark" %>
+        <% end %>
+      </div>
+    </div>
 
-    <%= form_tag deposit_account_path(@account.id) do %>
-      <%= number_field_tag :amount, 0 %>
-      <%= submit_tag "Depositar" %>
-    <% end %>
+    <div class="card col" style="max-width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">Saque</h5>
+
+        <%= form_tag withdraw_account_path(@account.id) do %>
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">Valor</span>
+            <%= number_field_tag :amount, 0, class: "form-control" %>
+          </div>
+
+          <%= submit_tag "Sacar", class: "btn btn-dark" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card col" style="max-width: 30rem;">
+      <div class="card-body">
+        <h5 class="card-title">Transferência</h5>
+
+        <%= form_tag transfer_account_path(@account.id) do %>
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">Código da conta destino</span>
+            <%= text_field_tag :transfer_account_code, 'XXXXXX', class: "form-control" %>
+          </div>
+          
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">Valor</span>
+            <%= number_field_tag :amount, 0, class: "form-control" %>
+          </div>
+
+          <%= submit_tag "Transferir", class: "btn btn-dark" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <h3>Saque</h3>
-
-    <%= form_tag withdraw_account_path(@account.id) do %>
-      <%= number_field_tag :amount, 0 %>
-      <%= submit_tag "Sacar" %>
-    <% end %>
-  </div>
-
-  <div>
-    <h3>Transferência</h3>
-
-    <%= form_tag transfer_account_path(@account.id) do %>
-      <%= text_field_tag :transfer_account_code, 'Código da conta de destino' %>
-      <%= text_field_tag :amount, 0 %>
-      <%= submit_tag "Transferir" %>
-    <% end %>
-  </div>
-  
 <% else %>
   <%= button_to 'Abra sua conta', create_account_path %>
 <% end %>

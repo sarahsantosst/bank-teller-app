@@ -6,19 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <header>
-      <%= link_to root_path do  %>
-        <h1> BankSystem </h1>
-      <% end %>
-      <div>
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+    <main>
+      <div class="container">
+        <%= render 'layouts/flash_messages' %>
+        <%= yield %>
       </div>
-    </header>
-
-    <%= yield %> 
+    </main>
   </body>
 </html>

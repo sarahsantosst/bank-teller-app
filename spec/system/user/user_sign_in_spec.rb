@@ -17,7 +17,6 @@ describe 'Usuário se autentica' do
     expect(page).to have_content 'Login efetuado com sucesso.'
     expect(page).not_to have_link 'Entrar'
     expect(page).to have_button 'Sair'
-    expect(page).to have_content '- sarah@sistemadefrete.com.br'
   end
 
   it 'e faz logout' do 

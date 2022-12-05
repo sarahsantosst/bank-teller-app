@@ -7,8 +7,4 @@ class User < ApplicationRecord
   def index
     @users = User.all
   end
-  
-  def description
-    "#{name} - #{email}"
-    end
-  end
+end

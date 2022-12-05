@@ -13,10 +13,8 @@ describe 'Usuário cria conta' do
 
     #assert
     expect(page).to have_content 'Você realizou seu registro com sucesso.'
-    expect(page).to have_content '- maria@sistemadefrete.com.br'
     expect(page).to have_button 'Sair'
     user = User.last
     expect(user.email).to eq 'maria@sistemadefrete.com.br'
-  
   end
 end
